@@ -1,0 +1,49 @@
+# Build and Release directories
+bin/
+obj/
+
+# Visual Studio Code
+.vscode/
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.rsuser
+
+# Logs and database
+logs/
+*.log
+*.tlog
+*.cache
+
+# NuGet packages
+*.nupkg
+packages/
+.nuget/
+
+# Coverage & Debugging
+TestResults/
+coverage/
+*.pdb
+*.opendb
+
+# Dotnet tools
+.dotnet-tools/
+
+# Ignore local environment settings
+.env
+secrets.json
+
+# Resharper & Rider caches
+*.DotSettings.user
+resharper/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
