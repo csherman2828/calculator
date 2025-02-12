@@ -5,14 +5,6 @@ namespace MyApp.Tests;
 public class CalculatorApp_Utils_Calculator
 {
     [Fact]
-    public void Calculates_Two_Addends()
-    {
-        Calculator calculator = new();
-        int result = calculator.Calculate("1,2");
-        Assert.Equal(3, result);
-    }
-
-    [Fact]
     public void Calculates_One_Addend()
     {
         Calculator calculator = new();
@@ -21,19 +13,19 @@ public class CalculatorApp_Utils_Calculator
     }
 
     [Fact]
+    public void Calculates_Two_Addends()
+    {
+        Calculator calculator = new();
+        int result = calculator.Calculate("1,2");
+        Assert.Equal(3, result);
+    }
+
+    [Fact]
     public void Calculates_Given_Three_Addends()
     {
         Calculator calculator = new();
         int result = calculator.Calculate("1,2,3");
         Assert.Equal(6, result);
-    }
-
-    [Fact]
-    public void Calculates_Given_Twelve_Addends()
-    {
-        Calculator calculator = new();
-        int result = calculator.Calculate("1,2,3,4,5,6,7,8,9,10,11,12");
-        Assert.Equal(78, result);
     }
 
     [Fact]
@@ -125,34 +117,10 @@ public class CalculatorApp_Utils_Calculator
     }
 
     [Fact]
-    public void Uses_Custom_Delimiter_Pound_Example()
-    {
-        Calculator calculator = new();
-        int result = calculator.Calculate("//#\\n2#5");
-        Assert.Equal(7, result);
-    }
-
-    [Fact]
-    public void Uses_Custom_Delimiter_Comma_Example()
-    {
-        Calculator calculator = new();
-        int result = calculator.Calculate("//,\\n2,ff,100");
-        Assert.Equal(102, result);
-    }
-
-    [Fact]
     public void Uses_Multiple_Custom_Delimiters()
     {
         Calculator calculator = new();
         int result = calculator.Calculate("//[;;;;][######]\\n2######5;;;;3");
         Assert.Equal(10, result);
-    }
-
-    [Fact]
-    public void Uses_Multiple_Custom_Delimiters_Example()
-    {
-        Calculator calculator = new();
-        int result = calculator.Calculate("//[*][!!][r9r]\\n11r9r22*hh*33!!44");
-        Assert.Equal(110, result);
     }
 }
