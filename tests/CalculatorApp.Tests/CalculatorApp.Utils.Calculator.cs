@@ -1,4 +1,4 @@
-﻿using CalculatorApp.Utils;
+using CalculatorApp.Utils;
 
 namespace MyApp.Tests;
 
@@ -103,8 +103,9 @@ public class CalculatorApp_Utils_Calculator
     public void Splits_Addends_On_Newline_And_Comma()
     {
         Calculator calculator = new();
-        int result = calculator.Calculate("1\n2,3\n4\n5");
-        Assert.Equal(15, result);
+        // escaped backslash newlines is how the standard input "\n" gets parsed
+        int result = calculator.Calculate("1\\n2,3\\n4\\n\\n5,6,,,,\n\n");
+        Assert.Equal(21, result);
     }
 
     [Fact]

@@ -33,7 +33,13 @@ public class Calculator
 
   private List<int> ConvertStringToIntList(string input)
   {
-    string[] delimiters = { ",", "\n" };
+    string[] delimiters = {
+      // original delimiter
+      ",",
+      // if we want the user to be able to type in "\n" as a delimiter, we need
+      //   to escape the backslash
+      "\\n"
+    };
 
     // will be broken down eventually by each delimiter
     List<string> addendStrings = new List<string>();
