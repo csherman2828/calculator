@@ -1,3 +1,6 @@
+using System;
+using System.Text.RegularExpressions;
+
 namespace CalculatorApp.Utils;
 
 public class TooManyAddendsException : Exception
@@ -12,24 +15,39 @@ public class NegativeAddendException : Exception
   {
     this.negativeAddends = negativeAddends;
   }
-  public List<int> GetNegativeAddends => negativeAddends;
+  public List<int> NegativeAddends => negativeAddends;
 }
 
 public class Calculator
 {
   private const int DELIMITER_POSITION = 2;
   private const int ADDEND_STRING_START = 5;
+  private const string SINGLE_CUSTOM_DELIMITER_REGEX = @"^//.\\n.*";
+  private const string MULTI_CUSTOM_DELIMITER_REGEX = @"^//(\[[^\]]*\])+\\n.*";
 
   public int Calculate(string input)
   {
     string originalAddendString;
     List<string> delimiters = new List<string> { ",", "\\n" };
 
-    if (input.StartsWith("//"))
+    if (Regex.IsMatch(input, SINGLE_CUSTOM_DELIMITER_REGEX))
     {
       char customDelimiter = input[DELIMITER_POSITION];
       delimiters.Add(customDelimiter.ToString());
       originalAddendString = input.Substring(ADDEND_STRING_START);
+    }
+    else if (Regex.IsMatch(input, MULTI_CUSTOM_DELIMITER_REGEX))
+    {
+      MatchCollection matches = Regex.Matches(input, @"\[(.*?)\]");
+      foreach (Match match in matches)
+      {
+        delimiters.Add(match.Groups[1].Value);
+      }
+      originalAddendString = input.Substring(input.IndexOf("\\n") + 2);
+    }
+    else if (input.Contains("//"))
+    {
+      throw new ArgumentException("Invalid custom delimiter format");
     }
     else
     {

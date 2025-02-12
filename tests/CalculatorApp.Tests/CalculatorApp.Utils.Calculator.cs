@@ -95,7 +95,7 @@ public class CalculatorApp_Utils_Calculator
     {
         Calculator calculator = new();
         NegativeAddendException e = Assert.Throws<NegativeAddendException>(delegate { calculator.Calculate("-1,2,-3"); });
-        Assert.Equal(new List<int> { -1, -3 }, e.GetNegativeAddends);
+        Assert.Equal(new List<int> { -1, -3 }, e.NegativeAddends);
         Assert.Equal("Negative addends provided: -1, -3", e.Message);
     }
 
@@ -138,5 +138,21 @@ public class CalculatorApp_Utils_Calculator
         Calculator calculator = new();
         int result = calculator.Calculate("//,\\n2,ff,100");
         Assert.Equal(102, result);
+    }
+
+    [Fact]
+    public void Uses_Multiple_Custom_Delimiters()
+    {
+        Calculator calculator = new();
+        int result = calculator.Calculate("//[;;;;][######]\\n2######5;;;;3");
+        Assert.Equal(10, result);
+    }
+
+    [Fact]
+    public void Uses_Multiple_Custom_Delimiters_Example()
+    {
+        Calculator calculator = new();
+        int result = calculator.Calculate("//[*][!!][r9r]\\n11r9r22*hh*33!!44");
+        Assert.Equal(110, result);
     }
 }
