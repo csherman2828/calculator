@@ -37,8 +37,7 @@ add> 1,2
 add> 
 ```
 
-You can add up to two numbers together by presenting them as a comma separated
-list.
+You can add numbers together by presenting them as a comma separated list.
 
 ```
 // 2 + 3 = 5
@@ -49,15 +48,13 @@ add> 2,3
 add> 2
 ```
 
+You can include negative numbers in your calculation (which can simulate subtraction).
+
+```
+// 2 - 5 + 10 = 7
+// 2 + (-5) + 10 = 7
+add> 2,-5,10
+7
+```
+
 The program ends after one addition operation.
-
-If you try to add more than three numbers, the program crashes.
-
-```
-// 1 + 2 + 3 = 6
-add> 1,2,3
-
-Unhandled exception. CalculatorApp.Utils.TooManyAddendsException: More than two addends provided
-   at CalculatorApp.Utils.Calculator.Calculate(String input) in /home/csherman2828/projects/calculator-csharp/Calculator/src/CalculatorApp/Calculator.cs:line 16
-   at CalculatorApp.Program.Main() in /home/csherman2828/projects/calculator-csharp/Calculator/src/CalculatorApp/Program.cs:line 16
-```
