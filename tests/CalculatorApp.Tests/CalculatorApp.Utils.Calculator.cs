@@ -115,4 +115,28 @@ public class CalculatorApp_Utils_Calculator
         int result = calculator.Calculate("1,2,3,4,5,1001");
         Assert.Equal(15, result);
     }
+
+    [Fact]
+    public void Uses_Custom_Delimiter()
+    {
+        Calculator calculator = new();
+        int result = calculator.Calculate("//;\\n\\n\\n,,,;;;1;2,3\\n4\\n5,6");
+        Assert.Equal(21, result);
+    }
+
+    [Fact]
+    public void Uses_Custom_Delimiter_Pound_Example()
+    {
+        Calculator calculator = new();
+        int result = calculator.Calculate("//#\\n2#5");
+        Assert.Equal(7, result);
+    }
+
+    [Fact]
+    public void Uses_Custom_Delimiter_Comma_Example()
+    {
+        Calculator calculator = new();
+        int result = calculator.Calculate("//,\\n2,ff,100");
+        Assert.Equal(102, result);
+    }
 }

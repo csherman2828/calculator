@@ -17,9 +17,28 @@ public class NegativeAddendException : Exception
 
 public class Calculator
 {
+  private const int DELIMITER_POSITION = 2;
+  private const int ADDEND_STRING_START = 5;
+
   public int Calculate(string input)
   {
-    List<int> addends = ConvertStringToIntList(input).Where(addend => addend <= 1000).ToList();
+    string originalAddendString;
+    List<string> delimiters = new List<string> { ",", "\\n" };
+
+    if (input.StartsWith("//"))
+    {
+      char customDelimiter = input[DELIMITER_POSITION];
+      delimiters.Add(customDelimiter.ToString());
+      originalAddendString = input.Substring(ADDEND_STRING_START);
+    }
+    else
+    {
+      originalAddendString = input;
+    }
+
+    List<int> addends = ConvertStringToIntList(originalAddendString, delimiters)
+      .Where(addend => addend <= 1000).ToList();
+
 
     AssertNoNegatives(addends);
 
@@ -31,15 +50,8 @@ public class Calculator
     return sum;
   }
 
-  private List<int> ConvertStringToIntList(string input)
+  private List<int> ConvertStringToIntList(string input, List<string> delimiters)
   {
-    string[] delimiters = {
-      // original delimiter
-      ",",
-      // if we want the user to be able to type in "\n" as a delimiter, we need
-      //   to escape the backslash
-      "\\n"
-    };
 
     // will be broken down eventually by each delimiter
     List<string> addendStrings = new List<string>();
