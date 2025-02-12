@@ -50,12 +50,12 @@ public class Calculator
     return sum;
   }
 
-  private List<int> ConvertStringToIntList(string input, List<string> delimiters)
+  private List<int> ConvertStringToIntList(string originalAddendString, List<string> delimiters)
   {
 
     // will be broken down eventually by each delimiter
     List<string> addendStrings = new List<string>();
-    addendStrings.Add(input);
+    addendStrings.Add(originalAddendString);
 
     // work through each delimiter and split the addend strings
     foreach (string delimiter in delimiters)
