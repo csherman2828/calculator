@@ -55,7 +55,6 @@ If you try to add more than three numbers, the program crashes.
 
 ```
 // 1 + 2 + 3 = 6
-```
 add> 1,2,3
 
 Unhandled exception. CalculatorApp.Utils.TooManyAddendsException: More than two addends provided
