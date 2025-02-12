@@ -21,33 +21,41 @@ public class CalculatorApp_Utils_Calculator
     }
 
     [Fact]
-    public void Throws_TooManyAddendsException_Given_Three_Addends()
+    public void Calculates_Given_Three_Addends()
     {
         Calculator calculator = new();
-        Assert.Throws<TooManyAddendsException>(() => calculator.Calculate("1,2,3"));
+        int result = calculator.Calculate("1,2,3");
+        Assert.Equal(6, result);
     }
 
     [Fact]
-    public void Throws_TooManyAddendsException_Given_Five_Addends()
+    public void Calculates_Given_Twelve_Addends()
     {
         Calculator calculator = new();
-        Assert.Throws<TooManyAddendsException>(() => calculator.Calculate("1,2,3,4,5"));
+        int result = calculator.Calculate("1,2,3,4,5,6,7,8,9,10,11,12");
+        Assert.Equal(78, result);
     }
 
     [Fact]
-    public void Returns_Zero_Given_Empty_String()
+    public void Calculates_Given_One_Thousand_Addends()
     {
         Calculator calculator = new();
-        int result = calculator.Calculate("");
-        Assert.Equal(0, result);
+        int[] addends = new int[1000];
+        for (int i = 0; i < 1000; i++)
+        {
+            addends[i] = 1;
+        }
+        string input = string.Join(",", addends);
+        int result = calculator.Calculate(input);
+        Assert.Equal(1000, result);
     }
 
     [Fact]
     public void Treats_Empty_String_As_Zero()
     {
         Calculator calculator = new();
-        int result = calculator.Calculate("1,");
-        Assert.Equal(1, result);
+        int result = calculator.Calculate("");
+        Assert.Equal(0, result);
     }
 
     [Fact]
@@ -59,10 +67,34 @@ public class CalculatorApp_Utils_Calculator
     }
 
     [Fact]
+    public void Treats_Trailing_Comma_As_Zero()
+    {
+        Calculator calculator = new();
+        int result = calculator.Calculate("1,");
+        Assert.Equal(1, result);
+    }
+
+    [Fact]
     public void Treats_Leading_Comma_As_Zero()
     {
         Calculator calculator = new();
         int result = calculator.Calculate(",1");
         Assert.Equal(1, result);
+    }
+
+    [Fact]
+    public void TreatsAllEmptyStringsAsZero()
+    {
+        Calculator calculator = new();
+        int result = calculator.Calculate(",,,2,,,,,3,,,5,,");
+        Assert.Equal(10, result);
+    }
+
+    [Fact]
+    public void Calculates_Negative_Numbers_Correctly()
+    {
+        Calculator calculator = new();
+        int result = calculator.Calculate("-1,2,-3");
+        Assert.Equal(-2, result);
     }
 }

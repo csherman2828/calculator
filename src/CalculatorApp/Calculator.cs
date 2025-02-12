@@ -11,11 +11,6 @@ public class Calculator
   {
     string[] numbersToAdd = input.Split(",");
 
-    if (numbersToAdd.Length > 2)
-    {
-      throw new TooManyAddendsException();
-    }
-
     int sum = 0;
     foreach (var number in numbersToAdd)
     {
