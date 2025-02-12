@@ -9,18 +9,23 @@ public class Calculator
 {
   public int Calculate(string input)
   {
-    string[] numbersToAdd = input.Split(",");
+    List<string> addendStrings = ConvertStringToIntList(input);
 
     int sum = 0;
-    foreach (var number in numbersToAdd)
+    foreach (string addendString in addendStrings)
     {
       try
       {
-        int parsedInt = int.Parse(number);
-        sum += parsedInt;
+        int addend = int.Parse(addendString);
+        sum += addend;
       }
       catch (FormatException) { }
     }
     return sum;
+  }
+
+  private List<string> ConvertStringToIntList(string input)
+  {
+    return input.Split(',').ToList();
   }
 }
