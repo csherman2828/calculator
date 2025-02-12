@@ -49,6 +49,8 @@ add> 2,3
 add> 2
 ```
 
+The program ends after one addition operation.
+
 If you try to add more than three numbers, the program crashes.
 
 ```
