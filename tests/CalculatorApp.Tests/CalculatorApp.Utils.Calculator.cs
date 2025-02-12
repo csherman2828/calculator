@@ -106,4 +106,12 @@ public class CalculatorApp_Utils_Calculator
         int result = calculator.Calculate("1\n2,3\n4\n5");
         Assert.Equal(15, result);
     }
+
+    [Fact]
+    public void Ignores_Addends_Over_One_Thousand()
+    {
+        Calculator calculator = new();
+        int result = calculator.Calculate("1,2,3,4,5,1001");
+        Assert.Equal(15, result);
+    }
 }

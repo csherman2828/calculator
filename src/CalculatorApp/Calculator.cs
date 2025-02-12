@@ -19,7 +19,7 @@ public class Calculator
 {
   public int Calculate(string input)
   {
-    List<int> addends = ConvertStringToIntList(input);
+    List<int> addends = ConvertStringToIntList(input).Where(addend => addend <= 1000).ToList();
 
     AssertNoNegatives(addends);
 
