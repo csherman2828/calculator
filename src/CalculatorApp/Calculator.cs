@@ -5,11 +5,23 @@ public class TooManyAddendsException : Exception
   public TooManyAddendsException() : base("More than two addends provided") { }
 }
 
+public class NegativeAddendException : Exception
+{
+  List<int> negativeAddends;
+  public NegativeAddendException(List<int> negativeAddends) : base($"Negative addends provided: {string.Join(", ", negativeAddends)}")
+  {
+    this.negativeAddends = negativeAddends;
+  }
+  public List<int> GetNegativeAddends => negativeAddends;
+}
+
 public class Calculator
 {
   public int Calculate(string input)
   {
     List<int> addends = ConvertStringToIntList(input);
+
+    AssertNoNegatives(addends);
 
     int sum = 0;
     foreach (int addend in addends)
@@ -53,5 +65,21 @@ public class Calculator
     }
 
     return addends;
+  }
+
+  private void AssertNoNegatives(List<int> addends)
+  {
+    List<int> negativeAddends = new List<int>();
+    foreach (int addend in addends)
+    {
+      if (addend < 0)
+      {
+        negativeAddends.Add(addend);
+      }
+    }
+    if (negativeAddends.Count > 0)
+    {
+      throw new NegativeAddendException(negativeAddends);
+    }
   }
 }
