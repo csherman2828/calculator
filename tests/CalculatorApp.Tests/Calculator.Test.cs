@@ -214,4 +214,112 @@ public class CalculatorApp_Utils_Calculator
         int result = calculator.Calculate("1##2,3\\n4##3");
         Assert.Equal(6, result);
     }
+
+    [Fact]
+    public void Handles_Explicit_Add()
+    {
+        StringSplitter stringSplitter = new();
+        stringSplitter.AddSplitStrategy(new CustomSingleCharSplitStrategy());
+        stringSplitter.AddSplitStrategy(new CustomMultiStringSplitStrategy());
+        stringSplitter.AddSplitStrategy(new DefaultSplitStrategy());
+
+        OperandRules operandRules = new();
+        operandRules.AddRule(new NoNegativesRule());
+
+        OperandTransformer operandTransformer = new();
+        operandTransformer.AddTransformation(new UpperBoundTransformation(1000));
+
+        CalculatorBuilder calculatorBuilder = new();
+        Calculator calculator = calculatorBuilder
+          .SetOperation("ADD")
+          .SetStringSplitter(stringSplitter)
+          .SetStringToIntConverter(new StringToIntConverter())
+          .SetOperandRules(operandRules)
+          .SetOperandTransformer(operandTransformer)
+          .Build();
+
+        int result = calculator.Calculate("1,2");
+        Assert.Equal(3, result);
+    }
+
+    [Fact]
+    public void Handles_Explicit_Subtract()
+    {
+        StringSplitter stringSplitter = new();
+        stringSplitter.AddSplitStrategy(new CustomSingleCharSplitStrategy());
+        stringSplitter.AddSplitStrategy(new CustomMultiStringSplitStrategy());
+        stringSplitter.AddSplitStrategy(new DefaultSplitStrategy());
+
+        OperandRules operandRules = new();
+        operandRules.AddRule(new NoNegativesRule());
+
+        OperandTransformer operandTransformer = new();
+        operandTransformer.AddTransformation(new UpperBoundTransformation(1000));
+
+        CalculatorBuilder calculatorBuilder = new();
+        Calculator calculator = calculatorBuilder
+          .SetOperation("SUBTRACT")
+          .SetStringSplitter(stringSplitter)
+          .SetStringToIntConverter(new StringToIntConverter())
+          .SetOperandRules(operandRules)
+          .SetOperandTransformer(operandTransformer)
+          .Build();
+
+        int result = calculator.Calculate("5,2");
+        Assert.Equal(3, result);
+    }
+
+    [Fact]
+    public void Handles_Explicit_Multiply()
+    {
+        StringSplitter stringSplitter = new();
+        stringSplitter.AddSplitStrategy(new CustomSingleCharSplitStrategy());
+        stringSplitter.AddSplitStrategy(new CustomMultiStringSplitStrategy());
+        stringSplitter.AddSplitStrategy(new DefaultSplitStrategy());
+
+        OperandRules operandRules = new();
+        operandRules.AddRule(new NoNegativesRule());
+
+        OperandTransformer operandTransformer = new();
+        operandTransformer.AddTransformation(new UpperBoundTransformation(1000));
+
+        CalculatorBuilder calculatorBuilder = new();
+        Calculator calculator = calculatorBuilder
+          .SetOperation("MULTIPLY")
+          .SetStringSplitter(stringSplitter)
+          .SetStringToIntConverter(new StringToIntConverter())
+          .SetOperandRules(operandRules)
+          .SetOperandTransformer(operandTransformer)
+          .Build();
+
+        int result = calculator.Calculate("2,3");
+        Assert.Equal(6, result);
+    }
+
+    [Fact]
+    public void Handles_Explicit_Divide()
+    {
+        StringSplitter stringSplitter = new();
+        stringSplitter.AddSplitStrategy(new CustomSingleCharSplitStrategy());
+        stringSplitter.AddSplitStrategy(new CustomMultiStringSplitStrategy());
+        stringSplitter.AddSplitStrategy(new DefaultSplitStrategy());
+
+        OperandRules operandRules = new();
+        operandRules.AddRule(new NoNegativesRule());
+
+        OperandTransformer operandTransformer = new();
+        operandTransformer.AddTransformation(new UpperBoundTransformation(1000));
+
+        CalculatorBuilder calculatorBuilder = new();
+        Calculator calculator = calculatorBuilder
+          .SetOperation("DIVIDE")
+          .SetStringSplitter(stringSplitter)
+          .SetStringToIntConverter(new StringToIntConverter())
+          .SetOperandRules(operandRules)
+          .SetOperandTransformer(operandTransformer)
+          .Build();
+
+        int result = calculator.Calculate("6,2");
+        Assert.Equal(3, result);
+    }
 }

@@ -5,12 +5,14 @@ public class CalculatorArgs
   private bool _shouldAllowNegatives;
   private int _upperBound;
   private string _alternativeDefaultDelim;
+  private string _operation;
 
   public CalculatorArgs(string[] args)
   {
     _shouldAllowNegatives = false;
     _upperBound = 1000;
     _alternativeDefaultDelim = "\\n";
+    _operation = "ADD";
 
     for (int argIdx = 0; argIdx < args.Length; argIdx++)
     {
@@ -41,6 +43,14 @@ public class CalculatorArgs
         }
       }
 
+      if (arg == "-o")
+      {
+        if (argIdx + 1 < args.Length)
+        {
+          _operation = args[argIdx + 1].ToUpper();
+        }
+      }
+
     }
   }
 
@@ -65,6 +75,14 @@ public class CalculatorArgs
     get
     {
       return _alternativeDefaultDelim;
+    }
+  }
+
+  public string Operation
+  {
+    get
+    {
+      return _operation;
     }
   }
 }

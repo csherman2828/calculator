@@ -29,6 +29,7 @@ public class Program
 
     CalculatorBuilder calculatorBuilder = new();
     Calculator calculator = calculatorBuilder
+      .SetOperation(calculatorArgs.Operation)
       .SetStringSplitter(stringSplitter)
       .SetStringToIntConverter(new StringToIntConverter())
       .SetOperandRules(operandRules)

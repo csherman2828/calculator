@@ -2,6 +2,7 @@ namespace CalculatorApp;
 
 public class Calculator
 {
+  private ICalculatorOperation _operation;
   private IStringSplitter _stringSplitter;
   private IOperandTransformer _operandTransformer;
   private IStringToIntConverter _stringToIntConverter;
@@ -15,12 +16,14 @@ public class Calculator
   // - assert that no negative integers are present
   // - sum the integers
   public Calculator(
+    ICalculatorOperation operation,
     IStringSplitter stringSplitter,
     IStringToIntConverter stringToIntConverter,
     IOperandRules operandRules,
     IOperandTransformer operandTransformer
   )
   {
+    _operation = operation;
     _stringSplitter = stringSplitter;
     _operandTransformer = operandTransformer;
     _stringToIntConverter = stringToIntConverter;
@@ -52,13 +55,20 @@ public class Calculator
     return new CalculatorResult(answer, formula);
   }
 
-  private int _Calculate(List<int> addends)
+  private int _Calculate(List<int> operands)
   {
-    int sum = 0;
-    foreach (int addend in addends)
+    if (operands.Count == 0)
     {
-      sum += addend;
+      return _operation.Identity;
     }
-    return sum;
+
+    int firstOperand = operands[0];
+    int result = firstOperand;
+    for (int operandIdx = 1; operandIdx < operands.Count; operandIdx++)
+    {
+      int operand = operands[operandIdx];
+      result = _operation.Operate(result, operand);
+    }
+    return result;
   }
 }
