@@ -13,9 +13,9 @@ public class Program
 
     string input = Prompt();
 
-    int result = calculator.Calculate(input);
+    string formula = calculator.DisplayFormula(input);
 
-    Console.WriteLine(result);
+    Console.WriteLine(formula);
   }
 
   private static void Describe()

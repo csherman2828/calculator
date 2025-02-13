@@ -91,4 +91,12 @@ public class ChallengeExampleTests
     int result = calculator.Calculate("//[*][!!][r9r]\\n11r9r22*hh*33!!44");
     Assert.Equal(110, result);
   }
+
+  [Fact]
+  public void Stretch_1_Formula()
+  {
+    Calculator calculator = new();
+    string result = calculator.DisplayFormula("2,,4,rrrr,1001,6");
+    Assert.Equal("2+0+4+0+0+6 = 12", result);
+  }
 }

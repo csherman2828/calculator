@@ -27,15 +27,28 @@ public class Calculator
 
   public int Calculate(string input)
   {
-    List<string> addendStrings = Split(input);
-    List<int> potentialAddends = Convert(addendStrings);
-    AssertNoNegatives(potentialAddends);
-    List<int> addends = Transform(potentialAddends);
-    int result = Calculate(addends);
+    List<string> addendStrings = _Split(input);
+    List<int> potentialAddends = _Convert(addendStrings);
+    _AssertNoNegatives(potentialAddends);
+    List<int> addends = _Transform(potentialAddends);
+    int result = _Calculate(addends);
     return result;
   }
 
-  private List<string> Split(string input)
+  public string DisplayFormula(string input)
+  {
+    // this duplicated code makes me sad but we will make it right later
+    List<string> addendStrings = _Split(input);
+    List<int> potentialAddends = _Convert(addendStrings);
+    _AssertNoNegatives(potentialAddends);
+    List<int> addends = _Transform(potentialAddends);
+    string formulaStart = string.Join("+", addends);
+    int result = _Calculate(addends);
+    string resultString = string.Join(" = ", new string[] { formulaStart, result.ToString() });
+    return resultString;
+  }
+
+  private List<string> _Split(string input)
   {
     string originalAddendString;
     List<string> delimiters = new List<string> { ",", "\\n" };
@@ -65,7 +78,7 @@ public class Calculator
     return originalAddendString.Split(delimitersArray, StringSplitOptions.None).ToList();
   }
 
-  private List<int> Convert(List<string> addendStrings)
+  private List<int> _Convert(List<string> addendStrings)
   {
     List<int> addends = new List<int>();
     foreach (string addendString in addendStrings)
@@ -75,12 +88,15 @@ public class Calculator
         int addend = int.Parse(addendString);
         addends.Add(addend);
       }
-      catch (FormatException) { }
+      catch (FormatException)
+      {
+        addends.Add(0); // treat non-numeric strings as 0
+      }
     }
     return addends;
   }
 
-  private void AssertNoNegatives(List<int> addends)
+  private void _AssertNoNegatives(List<int> addends)
   {
     List<int> negativeAddends = new List<int>();
     foreach (int addend in addends)
@@ -96,7 +112,7 @@ public class Calculator
     }
   }
 
-  private List<int> Transform(List<int> addends)
+  private List<int> _Transform(List<int> addends)
   {
     List<int> transformedAddends = new List<int>();
     foreach (int addend in addends)
@@ -113,7 +129,7 @@ public class Calculator
     return transformedAddends;
   }
 
-  private int Calculate(List<int> addends)
+  private int _Calculate(List<int> addends)
   {
     int sum = 0;
     foreach (int addend in addends)
