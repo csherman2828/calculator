@@ -5,7 +5,7 @@ public class Calculator
   private IStringSplitter _stringSplitter;
   private IOperandTransformer _operandTransformer;
   private IStringToIntConverter _stringToIntConverter;
-  private bool _shouldAllowNegatives;
+  private IOperandRules _operandRules;
 
   // a String Calculator will
   // - take a string as an input
@@ -17,14 +17,14 @@ public class Calculator
   public Calculator(
     IStringSplitter stringSplitter,
     IStringToIntConverter stringToIntConverter,
-    IOperandTransformer operandTransformer,
-    bool shouldAllowNegatives
+    IOperandRules operandRules,
+    IOperandTransformer operandTransformer
   )
   {
     _stringSplitter = stringSplitter;
     _operandTransformer = operandTransformer;
     _stringToIntConverter = stringToIntConverter;
-    _shouldAllowNegatives = shouldAllowNegatives;
+    _operandRules = operandRules;
   }
 
   public int Calculate(string input)
@@ -44,31 +44,12 @@ public class Calculator
     // this duplicated code makes me sad but we will make it right later
     List<string> addendStrings = _stringSplitter.Split(input);
     List<int> potentialAddends = _stringToIntConverter.Convert(addendStrings);
-    if (!_shouldAllowNegatives)
-    {
-      _AssertNoNegatives(potentialAddends);
-    }
+    _operandRules.Enforce(potentialAddends);
     List<int> addends = _operandTransformer.Transform(potentialAddends);
     string formulaStart = string.Join("+", addends);
     int answer = _Calculate(addends);
     string formula = string.Join(" = ", new string[] { formulaStart, answer.ToString() });
     return new CalculatorResult(answer, formula);
-  }
-
-  private void _AssertNoNegatives(List<int> addends)
-  {
-    List<int> negativeAddends = new List<int>();
-    foreach (int addend in addends)
-    {
-      if (addend < 0)
-      {
-        negativeAddends.Add(addend);
-      }
-    }
-    if (negativeAddends.Count > 0)
-    {
-      throw new NegativeOperandException(negativeAddends);
-    }
   }
 
   private int _Calculate(List<int> addends)

@@ -1,4 +1,4 @@
-namespace CalculatorApp;
+namespace CalculatorApp.Rules;
 
 public class NegativeOperandException : Exception
 {

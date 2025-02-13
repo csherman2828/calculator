@@ -2,6 +2,7 @@ using CalculatorApp.Builder;
 using CalculatorApp.OperandTransformers;
 using CalculatorApp.StringSplitters;
 using CalculatorApp.Converters;
+using CalculatorApp.Rules;
 using CalculatorApp;
 
 namespace MyApp.Tests;
@@ -22,6 +23,10 @@ public class CalculatorApp_Utils_Calculator
 
         StringToIntConverter stringToIntConverter = new();
         calculatorBuilder.SetStringToIntConverter(stringToIntConverter);
+
+        OperandRules operandRules = new();
+        operandRules.AddRule(new NoNegativesRule());
+        calculatorBuilder.SetOperandRules(operandRules);
 
         OperandTransformer operandTransformer = new();
         operandTransformer.AddTransformation(new UpperBoundTransformation(1000));
@@ -149,7 +154,8 @@ public class CalculatorApp_Utils_Calculator
         operandTransformer.AddTransformation(new UpperBoundTransformation(1000));
         calculatorBuilder.SetOperandTransformer(operandTransformer);
 
-        calculatorBuilder.AllowNegatives();
+        OperandRules operandRules = new();
+        calculatorBuilder.SetOperandRules(operandRules);
 
         Calculator calculator = calculatorBuilder.Build();
 

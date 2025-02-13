@@ -1,6 +1,7 @@
 ﻿using CalculatorApp.StringSplitters;
 using CalculatorApp.OperandTransformers;
 using CalculatorApp.Builder;
+using CalculatorApp.Rules;
 
 namespace CalculatorApp;
 
@@ -44,10 +45,14 @@ public class Program
     stringSplitter.AddSplitStrategy(new DefaultSplitStrategy());
     calculatorBuilder.SetStringSplitter(stringSplitter);
 
-    if (calculatorArgs.ShouldAllowNegatives)
+    OperandRules operandRules = new();
+
+    if (!calculatorArgs.ShouldAllowNegatives)
     {
-      calculatorBuilder.AllowNegatives();
+      operandRules.AddRule(new NoNegativesRule());
     }
+
+    calculatorBuilder.SetOperandRules(operandRules);
 
     OperandTransformer operandTransformer = new();
     operandTransformer.AddTransformation(new UpperBoundTransformation(1000));
