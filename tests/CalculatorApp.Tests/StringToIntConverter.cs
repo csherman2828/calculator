@@ -14,7 +14,7 @@ public class StringToIntConverterTest
   }
 
   [Fact]
-  void Converts_Non_Numeric_Strings_To_Zero()
+  public void Converts_Non_Numeric_Strings_To_Zero()
   {
     List<string> inputs = new List<string> { "1", "abc", "2", "" };
     IStringToIntConverter stringToIntConverter = new StringToIntConverter();
