@@ -14,6 +14,19 @@ public class CalculatorBuilder
   private IStringToIntConverter _stringToIntConverter;
   private IOperandRules _operandRules;
 
+  // The builder class is responsible for making the Calculator object by
+  // injecting concrete implemnations of the interfaces into the Calculator.
+  // This keeps Calculator free on coupling to concrete implementations
+  // of its classes. It is a form of "Inversion of Control", where rather
+  // than the Calculator depending outward on concrete implemenations,
+  // it depends on its interfaces while the concrete implementations depend
+  // on the Calculator for its interfaces.
+  // 
+  // This also counts as a rudimentary
+  // form of "DependencyInjection", since we pass in dependencies into
+  // the Calculator constructor at runtime rather than import concrete implementations
+  // at compile time. While this is not done with an official DI or IoC library or
+  // framework, it's a start while I learn the language.
   public CalculatorBuilder()
   {
     // TODO: a bit messy/inconsistent on the defaults, would want to clean this up
@@ -28,9 +41,6 @@ public class CalculatorBuilder
   {
     switch (operation.ToLower())
     {
-      case "add":
-        _operation = new AddOperation();
-        break;
       case "subtract":
         _operation = new SubtractOperation();
         break;
@@ -41,7 +51,8 @@ public class CalculatorBuilder
         _operation = new DivideOperation();
         break;
       default:
-        throw new ArgumentException($"Unknown operation: {operation}");
+        _operation = new AddOperation();
+        break;
     }
     return this;
   }

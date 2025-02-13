@@ -1,5 +1,8 @@
 namespace CalculatorApp.Rules;
 
+// OperandRules instances enforce rules on a list of operands.
+// The return value of "Enforce" is void - convention is to throw an exception
+// if the rule is not satisfied.
 public class OperandRules : IOperandRules
 {
   private List<IOperandRule> _operandRules;

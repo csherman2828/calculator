@@ -1,5 +1,13 @@
 namespace CalculatorApp;
 
+
+// a String Calculator will
+// - take a string as an input
+// - split the string into a list of strings
+// - convert the strings into integers
+// - transform the integers given certain transformations
+// - assert that no negative integers are present
+// - sum the integers
 public class Calculator
 {
   private ICalculatorOperation _operation;
@@ -8,13 +16,9 @@ public class Calculator
   private IStringToIntConverter _stringToIntConverter;
   private IOperandRules _operandRules;
 
-  // a String Calculator will
-  // - take a string as an input
-  // - split the string into a list of strings
-  // - convert the strings into integers
-  // - transform the integers given certain transformations
-  // - assert that no negative integers are present
-  // - sum the integers
+  // This class does not rely on hardcoded imports or namespaces for its
+  // dependencies. It defines its own interfaces and expects them to be passed
+  // in, or "injected"
   public Calculator(
     ICalculatorOperation operation,
     IStringSplitter stringSplitter,
@@ -30,12 +34,14 @@ public class Calculator
     _operandRules = operandRules;
   }
 
+  // only provides the integer result of the calculation
   public int Calculate(string input)
   {
     CalculatorResult calculatorResult = Solve(input);
     return calculatorResult.Answer;
   }
 
+  // provides a string representation of the formula used to calculate the answer
   public string DisplayFormula(string input)
   {
     CalculatorResult calculatorResult = Solve(input);
@@ -55,6 +61,7 @@ public class Calculator
     return new CalculatorResult(answer, formula);
   }
 
+  // use the given operation to calculate the result on the list of operands
   private int _Calculate(List<int> operands)
   {
     if (operands.Count == 0)

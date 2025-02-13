@@ -1,5 +1,6 @@
 namespace CalculatorApp.OperandTransformers;
 
+// This transformer will take any number greater than the upper bound and turn it into 0 
 public class UpperBoundTransformation : IOperandTransformation
 {
   private const int DEFAULT_UPPER_BOUND = 1000;

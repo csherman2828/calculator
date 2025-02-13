@@ -2,6 +2,14 @@ using System.Text.RegularExpressions;
 
 namespace CalculatorApp.StringSplitters;
 
+// the StringSplitter instance is responsible for splitting a string into its components
+// there are several strategies that can be applied, such as parsing the beginning
+// of the string for a list of multiple strings to use as delimiters.
+//
+// StringSplitter will collect a list of split strategies and apply them in order
+// Each split strategy is checked to see if the input string matches the
+// Regex pattern. If a match is found, the split strategy is applied to derive
+// a list of split token strings
 public class StringSplitter : IStringSplitter
 {
   private List<ISplitStrategy> _splitStrategies = new List<ISplitStrategy>();

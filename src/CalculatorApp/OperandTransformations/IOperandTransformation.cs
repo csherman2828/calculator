@@ -1,7 +1,7 @@
-namespace CalculatorApp.OperandTransformers
+namespace CalculatorApp.OperandTransformers;
+
+// a transformation takes one int and may or may not turn it into another int
+public interface IOperandTransformation
 {
-  public interface IOperandTransformation
-  {
-    int Transform(int input);
-  }
+  int Transform(int input);
 }

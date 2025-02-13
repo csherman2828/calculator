@@ -1,5 +1,8 @@
 
 namespace CalculatorApp;
+
+// responsible for parsing and making sense of the command line args
+// for the CalculatorApp
 public class CalculatorArgs
 {
   private bool _shouldAllowNegatives;

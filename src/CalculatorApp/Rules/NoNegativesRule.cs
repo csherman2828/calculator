@@ -1,5 +1,6 @@
 namespace CalculatorApp.Rules;
 
+// when enforced, this rule will throw an exception if any of the operands are negative
 public class NoNegativesRule : IOperandRule
 {
   public void Enforce(List<int> operands)

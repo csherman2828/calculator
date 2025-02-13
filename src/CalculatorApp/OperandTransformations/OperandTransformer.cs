@@ -1,4 +1,7 @@
 namespace CalculatorApp.OperandTransformers;
+
+// an OperandTransformer contains Transformations that tell it which integers
+// to transform and how to transform them
 public class OperandTransformer : IOperandTransformer
 {
   private List<IOperandTransformation> _transformations;

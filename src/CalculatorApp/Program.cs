@@ -6,6 +6,7 @@ using CalculatorApp.Rules;
 
 namespace CalculatorApp;
 
+// the entry point of the String Calculator App
 public class Program
 {
   public static void Main(string[] args)

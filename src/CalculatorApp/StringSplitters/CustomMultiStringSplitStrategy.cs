@@ -2,6 +2,11 @@ using System.Text.RegularExpressions;
 
 namespace CalculatorApp.StringSplitters;
 
+// This split strategy is used to parse a string that contains a list of delimiters.
+// The delimiters are specified in square brackets at the beginning of the string.
+// The string must match the pattern:
+//
+// //[{delimiter1}][{delimiter2}]...[{delimiterN}]\n{addendString}
 public class CustomMultiStringSplitStrategy : ISplitStrategy
 {
   public string Pattern => @"^//(\[[^\]]*\])+\\n.*";
