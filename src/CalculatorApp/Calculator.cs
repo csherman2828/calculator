@@ -54,18 +54,17 @@ public class Calculator
 
   public int Calculate(string input)
   {
-    List<string> addendStrings = _stringSplitter.Split(input);
-    List<int> potentialAddends = _stringToIntConverter.Convert(addendStrings);
-    if (_shouldRejectNegatives)
-    {
-      _AssertNoNegatives(potentialAddends);
-    }
-    List<int> addends = _operandTransformer.Transform(potentialAddends);
-    int result = _Calculate(addends);
-    return result;
+    CalculatorResult calculatorResult = Solve(input);
+    return calculatorResult.Answer;
   }
 
   public string DisplayFormula(string input)
+  {
+    CalculatorResult calculatorResult = Solve(input);
+    return calculatorResult.Formula;
+  }
+
+  public CalculatorResult Solve(string input)
   {
     // this duplicated code makes me sad but we will make it right later
     List<string> addendStrings = _stringSplitter.Split(input);
@@ -76,9 +75,9 @@ public class Calculator
     }
     List<int> addends = _operandTransformer.Transform(potentialAddends);
     string formulaStart = string.Join("+", addends);
-    int result = _Calculate(addends);
-    string resultString = string.Join(" = ", new string[] { formulaStart, result.ToString() });
-    return resultString;
+    int answer = _Calculate(addends);
+    string formula = string.Join(" = ", new string[] { formulaStart, answer.ToString() });
+    return new CalculatorResult(answer, formula);
   }
 
   private void _AssertNoNegatives(List<int> addends)
