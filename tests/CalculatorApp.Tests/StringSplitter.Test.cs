@@ -59,4 +59,15 @@ public class StringSplitterTest
     List<string> result = stringSplitter.Split(input);
     Assert.Equal(new List<string> { "1", "2", "3" }, result);
   }
+
+  [Fact]
+  public void Use_Custom_Alternative_Delimiter()
+  {
+    string alternativeDelimiter = "##";
+    StringSplitter stringSplitter = new();
+    stringSplitter.AddSplitStrategy(new DefaultSplitStrategy(alternativeDelimiter));
+    string input = "1##2,3\\n4##5";
+    List<string> result = stringSplitter.Split(input);
+    Assert.Equal(new List<string> { "1", "2", "3\\n4", "5" }, result);
+  }
 }

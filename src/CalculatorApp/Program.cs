@@ -16,7 +16,7 @@ public class Program
     StringSplitter stringSplitter = new();
     stringSplitter.AddSplitStrategy(new CustomSingleCharSplitStrategy());
     stringSplitter.AddSplitStrategy(new CustomMultiStringSplitStrategy());
-    stringSplitter.AddSplitStrategy(new DefaultSplitStrategy());
+    stringSplitter.AddSplitStrategy(new DefaultSplitStrategy(calculatorArgs.AlternativeDefaultDelim));
 
     OperandRules operandRules = new();
     if (!calculatorArgs.ShouldAllowNegatives)

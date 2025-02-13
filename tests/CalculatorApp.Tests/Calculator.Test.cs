@@ -164,7 +164,7 @@ public class CalculatorApp_Utils_Calculator
     }
 
     [Fact]
-    public void Handle_Custom_Alternative_Delimiter()
+    public void Handle_Custom_Upper_Bound()
     {
         int upperBound = 100;
 
@@ -187,5 +187,31 @@ public class CalculatorApp_Utils_Calculator
 
         int result = calculator.Calculate("1,102,-1");
         Assert.Equal(0, result);
+    }
+
+    [Fact]
+    public void Handle_Custom_Alternative_Delimiter()
+    {
+        string alternativeDelimiter = "##";
+
+        CalculatorBuilder calculatorBuilder = new();
+
+        StringSplitter stringSplitter = new();
+        stringSplitter.AddSplitStrategy(new CustomSingleCharSplitStrategy());
+        stringSplitter.AddSplitStrategy(new CustomMultiStringSplitStrategy());
+        stringSplitter.AddSplitStrategy(new DefaultSplitStrategy(alternativeDelimiter));
+        calculatorBuilder.SetStringSplitter(stringSplitter);
+
+        OperandTransformer operandTransformer = new();
+        operandTransformer.AddTransformation(new UpperBoundTransformation(1000));
+        calculatorBuilder.SetOperandTransformer(operandTransformer);
+
+        OperandRules operandRules = new();
+        calculatorBuilder.SetOperandRules(operandRules);
+
+        Calculator calculator = calculatorBuilder.Build();
+
+        int result = calculator.Calculate("1##2,3\\n4##3");
+        Assert.Equal(6, result);
     }
 }
