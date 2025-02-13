@@ -44,7 +44,7 @@ public class Calculator
 
   public CalculatorResult Solve(string input)
   {
-    // this duplicated code makes me sad but we will make it right later
+    // we will rely on injected dependencies to do the non-calculating work
     List<string> addendStrings = _stringSplitter.Split(input);
     List<int> potentialAddends = _stringToIntConverter.Convert(addendStrings);
     _operandRules.Enforce(potentialAddends);
