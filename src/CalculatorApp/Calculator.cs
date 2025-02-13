@@ -4,17 +4,6 @@ using CalculatorApp.Converters;
 
 namespace CalculatorApp;
 
-public class NegativeAddendException : Exception
-{
-  private List<int> _negativeAddends;
-
-  public NegativeAddendException(List<int> negativeAddends) : base($"Negative addends provided: {string.Join(", ", negativeAddends)}")
-  {
-    _negativeAddends = negativeAddends;
-  }
-  public List<int> NegativeAddends => _negativeAddends;
-}
-
 public class Calculator
 {
   private IStringSplitter _stringSplitter;
@@ -92,7 +81,7 @@ public class Calculator
     }
     if (negativeAddends.Count > 0)
     {
-      throw new NegativeAddendException(negativeAddends);
+      throw new NegativeOperandException(negativeAddends);
     }
   }
 

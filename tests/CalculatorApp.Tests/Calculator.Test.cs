@@ -87,7 +87,7 @@ public class CalculatorApp_Utils_Calculator
     public void Throws_Exception_Listing_Negative_Numbers()
     {
         Calculator calculator = new();
-        NegativeAddendException e = Assert.Throws<NegativeAddendException>(delegate { calculator.Calculate("-1,2,-3"); });
+        NegativeOperandException e = Assert.Throws<NegativeOperandException>(delegate { calculator.Calculate("-1,2,-3"); });
         Assert.Equal(new List<int> { -1, -3 }, e.NegativeAddends);
         Assert.Equal("Negative addends provided: -1, -3", e.Message);
     }
