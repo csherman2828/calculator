@@ -1,5 +1,5 @@
 namespace CalculatorApp.OperandTransformers;
-public class OperandTransformer
+public class OperandTransformer : IOperandTransformer
 {
   private List<IOperandTransformation> _transformations;
 

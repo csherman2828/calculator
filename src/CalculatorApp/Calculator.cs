@@ -18,7 +18,7 @@ public class NegativeAddendException : Exception
 public class Calculator
 {
   private IStringSplitter _stringSplitter;
-  private OperandTransformer _operandTransformer;
+  private IOperandTransformer _operandTransformer;
   private IStringToIntConverter _stringToIntConverter;
   private bool _shouldRejectNegatives;
 
@@ -30,12 +30,12 @@ public class Calculator
     _shouldRejectNegatives = true;
   }
 
-  public void SetStringSplitter(StringSplitter stringSplitter)
+  public void SetStringSplitter(IStringSplitter stringSplitter)
   {
     _stringSplitter = stringSplitter;
   }
 
-  public void SetOperandTransformer(OperandTransformer operandTransformers)
+  public void SetOperandTransformer(IOperandTransformer operandTransformers)
   {
     _operandTransformer = operandTransformers;
   }
