@@ -66,7 +66,12 @@ If you include a negative number in your input, the program will crash.
 
 ```
 add> 1,-2,3
-
+Unhandled exception. CalculatorApp.Rules.NegativeOperandException: Negative addends provided: -2
+   at CalculatorApp.Rules.NoNegativesRule.Enforce(List`1 operands) in /home/csherman2828/projects/calculator-csharp/Calculator/src/CalculatorApp/Rules/NoNegativesRule.cs:line 10
+   at CalculatorApp.Rules.OperandRules.Enforce(List`1 operands) in /home/csherman2828/projects/calculator-csharp/Calculator/src/CalculatorApp/Rules/OperandRules.cs:line 21
+   at CalculatorApp.Calculator.Solve(String input) in /home/csherman2828/projects/calculator-csharp/Calculator/src/CalculatorApp/Calculator.cs:line 50
+   at CalculatorApp.Calculator.DisplayFormula(String input) in /home/csherman2828/projects/calculator-csharp/Calculator/src/CalculatorApp/Calculator.cs:line 41
+   at CalculatorApp.Program.Main(String[] args) in /home/csherman2828/projects/calculator-csharp/Calculator/src/CalculatorApp/Program.cs:line 43
 ```
 
 #### Enabling Negative Numbers as Input
@@ -154,7 +159,7 @@ Using the following format, you can specify a set of delimiters made up of one o
 For example, if your numbers are separated sometimes by `&&&` and sometimes by `##`, you could process a string as follows:
 
 ```
-//[&&&][##]\n1&&&2##3
+add> //[&&&][##]\n1&&&2##3
 1+2+3 = 6
 ```
 
@@ -166,22 +171,26 @@ you can use the `-o` option to substitute your own operation.
 #### Subtract
 
 ```
-dotnet run --project src/CalculatorApp -d *
+dotnet run --project src/CalculatorApp -o subtract
 ...
-add> 6,2
+subtract> 6,2
 6-2 = 4;
 ```
 
 #### Multiply
 
 ```
-add> 2,3
+dotnet run --project src/CalculatorApp -o multiply
+...
+multiply> 2,3
 2*3 = 6;
 ```
 
 #### Divide
 
 ```
-add> 24,3
+dotnet run --project src/CalculatorApp -o divide
+...
+divide> 24,3
 24/3 = 8
 ```
