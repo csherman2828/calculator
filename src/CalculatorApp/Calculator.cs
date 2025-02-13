@@ -2,7 +2,7 @@ using CalculatorApp.StringSplitters;
 using CalculatorApp.OperandTransformers;
 using CalculatorApp.Converters;
 
-namespace CalculatorApp.Utils;
+namespace CalculatorApp;
 
 public class NegativeAddendException : Exception
 {
@@ -17,7 +17,7 @@ public class NegativeAddendException : Exception
 
 public class Calculator
 {
-  private StringSplitter _stringSplitter;
+  private IStringSplitter _stringSplitter;
   private OperandTransformer _operandTransformer;
   private IStringToIntConverter _stringToIntConverter;
   private bool _shouldRejectNegatives;

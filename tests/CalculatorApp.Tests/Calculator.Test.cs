@@ -1,5 +1,5 @@
 using CalculatorApp.StringSplitters;
-using CalculatorApp.Utils;
+using CalculatorApp;
 
 namespace MyApp.Tests;
 

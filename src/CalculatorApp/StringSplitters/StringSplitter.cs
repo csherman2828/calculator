@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 
 namespace CalculatorApp.StringSplitters;
 
-public class StringSplitter
+public class StringSplitter : IStringSplitter
 {
   private List<ISplitStrategy> _splitStrategies = new List<ISplitStrategy>();
 

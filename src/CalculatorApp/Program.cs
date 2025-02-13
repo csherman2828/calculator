@@ -1,4 +1,4 @@
-﻿using CalculatorApp.Utils;
+﻿using CalculatorApp;
 using CalculatorApp.StringSplitters;
 using CalculatorApp.OperandTransformers;
 
