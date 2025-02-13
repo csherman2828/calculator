@@ -11,11 +11,12 @@ public class Program
 
     Describe();
 
-    string input = Prompt();
-
-    string formula = calculator.DisplayFormula(input);
-
-    Console.WriteLine(formula);
+    while (true)
+    {
+      string input = Prompt();
+      string formula = calculator.DisplayFormula(input);
+      Console.WriteLine(formula);
+    }
   }
 
   private static void Describe()
