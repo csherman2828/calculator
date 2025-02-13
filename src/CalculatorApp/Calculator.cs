@@ -4,11 +4,6 @@ using CalculatorApp.Converters;
 
 namespace CalculatorApp.Utils;
 
-public class TooManyAddendsException : Exception
-{
-  public TooManyAddendsException() : base("More than two addends provided") { }
-}
-
 public class NegativeAddendException : Exception
 {
   private List<int> _negativeAddends;
