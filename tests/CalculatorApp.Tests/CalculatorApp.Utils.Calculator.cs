@@ -125,7 +125,7 @@ public class CalculatorApp_Utils_Calculator
     }
 
     [Fact]
-    public void Stretch_3_Toggle_Negative_Denial()
+    public void Toggle_Negative_Denial_Off()
     {
         Calculator calculator = new(false);
         int result = calculator.Calculate("1,-2,3");
