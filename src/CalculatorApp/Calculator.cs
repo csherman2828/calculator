@@ -1,4 +1,5 @@
 using CalculatorApp.StringSplitters;
+using CalculatorApp.OperandTransformers;
 
 namespace CalculatorApp.Utils;
 
@@ -20,17 +21,24 @@ public class NegativeAddendException : Exception
 public class Calculator
 {
   private StringSplitter _stringSplitter;
+  private OperandTransformer _operandTransformer;
   private bool _shouldRejectNegatives;
 
   public Calculator()
   {
     _stringSplitter = StringSplitter.Default;
+    _operandTransformer = OperandTransformer.Default;
     _shouldRejectNegatives = true;
   }
 
   public void SetStringSplitter(StringSplitter stringSplitter)
   {
     _stringSplitter = stringSplitter;
+  }
+
+  public void SetOperandTransformer(OperandTransformer operandTransformers)
+  {
+    _operandTransformer = operandTransformers;
   }
 
   public void AllowNegatives()
@@ -60,7 +68,7 @@ public class Calculator
     {
       _AssertNoNegatives(potentialAddends);
     }
-    List<int> addends = _Transform(potentialAddends);
+    List<int> addends = _operandTransformer.Transform(potentialAddends);
     string formulaStart = string.Join("+", addends);
     int result = _Calculate(addends);
     string resultString = string.Join(" = ", new string[] { formulaStart, result.ToString() });

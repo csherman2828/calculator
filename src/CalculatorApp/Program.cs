@@ -1,5 +1,6 @@
 ﻿using CalculatorApp.Utils;
 using CalculatorApp.StringSplitters;
+using CalculatorApp.OperandTransformers;
 
 namespace CalculatorApp;
 
@@ -47,6 +48,10 @@ public class Program
     {
       calculator.AllowNegatives();
     }
+
+    OperandTransformer operandTransformer = new();
+    operandTransformer.AddTransformation(new UpperBoundTransformation(1000));
+    calculator.SetOperandTransformer(operandTransformer);
 
     Describe();
 
