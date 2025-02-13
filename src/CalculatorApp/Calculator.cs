@@ -1,7 +1,3 @@
-using CalculatorApp.StringSplitters;
-using CalculatorApp.OperandTransformers;
-using CalculatorApp.Converters;
-
 namespace CalculatorApp;
 
 public class Calculator
@@ -9,7 +5,7 @@ public class Calculator
   private IStringSplitter _stringSplitter;
   private IOperandTransformer _operandTransformer;
   private IStringToIntConverter _stringToIntConverter;
-  private bool _shouldRejectNegatives;
+  private bool _shouldAllowNegatives;
 
   // a String Calculator will
   // - take a string as an input
@@ -18,27 +14,17 @@ public class Calculator
   // - transform the integers given certain transformations
   // - assert that no negative integers are present
   // - sum the integers
-  public Calculator()
-  {
-    _stringSplitter = StringSplitter.Default;
-    _operandTransformer = OperandTransformer.Default;
-    _stringToIntConverter = new StringToIntConverter();
-    _shouldRejectNegatives = true;
-  }
-
-  public void SetStringSplitter(IStringSplitter stringSplitter)
+  public Calculator(
+    IStringSplitter stringSplitter,
+    IStringToIntConverter stringToIntConverter,
+    IOperandTransformer operandTransformer,
+    bool shouldAllowNegatives
+  )
   {
     _stringSplitter = stringSplitter;
-  }
-
-  public void SetOperandTransformer(IOperandTransformer operandTransformers)
-  {
-    _operandTransformer = operandTransformers;
-  }
-
-  public void AllowNegatives()
-  {
-    _shouldRejectNegatives = false;
+    _operandTransformer = operandTransformer;
+    _stringToIntConverter = stringToIntConverter;
+    _shouldAllowNegatives = shouldAllowNegatives;
   }
 
   public int Calculate(string input)
@@ -58,7 +44,7 @@ public class Calculator
     // this duplicated code makes me sad but we will make it right later
     List<string> addendStrings = _stringSplitter.Split(input);
     List<int> potentialAddends = _stringToIntConverter.Convert(addendStrings);
-    if (_shouldRejectNegatives)
+    if (!_shouldAllowNegatives)
     {
       _AssertNoNegatives(potentialAddends);
     }
