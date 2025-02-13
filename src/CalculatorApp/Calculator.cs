@@ -1,5 +1,6 @@
 using CalculatorApp.StringSplitters;
 using CalculatorApp.OperandTransformers;
+using CalculatorApp.Converters;
 
 namespace CalculatorApp.Utils;
 
@@ -10,24 +11,27 @@ public class TooManyAddendsException : Exception
 
 public class NegativeAddendException : Exception
 {
-  List<int> negativeAddends;
+  private List<int> _negativeAddends;
+
   public NegativeAddendException(List<int> negativeAddends) : base($"Negative addends provided: {string.Join(", ", negativeAddends)}")
   {
-    this.negativeAddends = negativeAddends;
+    _negativeAddends = negativeAddends;
   }
-  public List<int> NegativeAddends => negativeAddends;
+  public List<int> NegativeAddends => _negativeAddends;
 }
 
 public class Calculator
 {
   private StringSplitter _stringSplitter;
   private OperandTransformer _operandTransformer;
+  private IStringToIntConverter _stringToIntConverter;
   private bool _shouldRejectNegatives;
 
   public Calculator()
   {
     _stringSplitter = StringSplitter.Default;
     _operandTransformer = OperandTransformer.Default;
+    _stringToIntConverter = new StringToIntConverter();
     _shouldRejectNegatives = true;
   }
 
@@ -49,12 +53,12 @@ public class Calculator
   public int Calculate(string input)
   {
     List<string> addendStrings = _stringSplitter.Split(input);
-    List<int> potentialAddends = _Convert(addendStrings);
+    List<int> potentialAddends = _stringToIntConverter.Convert(addendStrings);
     if (_shouldRejectNegatives)
     {
       _AssertNoNegatives(potentialAddends);
     }
-    List<int> addends = _Transform(potentialAddends);
+    List<int> addends = _operandTransformer.Transform(potentialAddends);
     int result = _Calculate(addends);
     return result;
   }
@@ -106,23 +110,6 @@ public class Calculator
     {
       throw new NegativeAddendException(negativeAddends);
     }
-  }
-
-  private List<int> _Transform(List<int> addends)
-  {
-    List<int> transformedAddends = new List<int>();
-    foreach (int addend in addends)
-    {
-      if (addend > 1000)
-      {
-        transformedAddends.Add(0);
-      }
-      else
-      {
-        transformedAddends.Add(addend);
-      }
-    }
-    return transformedAddends;
   }
 
   private int _Calculate(List<int> addends)
