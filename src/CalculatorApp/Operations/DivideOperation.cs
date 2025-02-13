@@ -2,8 +2,6 @@ namespace CalculatorApp.Operations;
 
 public class DivideOperation : ICalculatorOperation
 {
-  public int Identity => 1;
-
   public string Formulate(List<int> operands)
   {
     if (operands.Count == 0)

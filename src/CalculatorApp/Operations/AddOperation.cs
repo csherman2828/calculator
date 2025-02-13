@@ -2,8 +2,6 @@ namespace CalculatorApp.Operations;
 
 public class AddOperation : ICalculatorOperation
 {
-  public int Identity => 0;
-
   public string Formulate(List<int> operands)
   {
     if (operands.Count == 0)
