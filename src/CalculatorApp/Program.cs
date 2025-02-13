@@ -2,12 +2,39 @@
 
 namespace CalculatorApp;
 
+public class CalculatorArgs
+{
+  private bool _shouldRejectNegatives;
+  public CalculatorArgs(string[] args)
+  {
+    _shouldRejectNegatives = true; // default value
+
+    foreach (string arg in args)
+    {
+      if (arg == "-n")
+      {
+        _shouldRejectNegatives = false;
+      }
+    }
+  }
+
+  public bool RejectNegatives
+  {
+    get
+    {
+      return _shouldRejectNegatives;
+    }
+  }
+}
+
 public class Program
 {
-  const string PROMPT = "add> ";
-  public static void Main()
+  private const string PROMPT = "add> ";
+  public static void Main(string[] args)
   {
-    Calculator calculator = new();
+    CalculatorArgs calculatorArgs = new(args);
+
+    Calculator calculator = new(calculatorArgs.RejectNegatives);
 
     Describe();
 

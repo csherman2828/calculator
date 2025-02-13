@@ -123,4 +123,12 @@ public class CalculatorApp_Utils_Calculator
         int result = calculator.Calculate("//[;;;;][######]\\n2######5;;;;3");
         Assert.Equal(10, result);
     }
+
+    [Fact]
+    public void Stretch_3_Toggle_Negative_Denial()
+    {
+        Calculator calculator = new(false);
+        int result = calculator.Calculate("1,-2,3");
+        Assert.Equal(2, result);
+    }
 }

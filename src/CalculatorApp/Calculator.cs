@@ -24,12 +24,21 @@ public class Calculator
   private const int ADDEND_STRING_START = 5;
   private const string SINGLE_CUSTOM_DELIMITER_REGEX = @"^//.\\n.*";
   private const string MULTI_CUSTOM_DELIMITER_REGEX = @"^//(\[[^\]]*\])+\\n.*";
+  private bool _shouldRejectNegatives;
+
+  public Calculator(bool shouldRejectNegatives = true)
+  {
+    _shouldRejectNegatives = shouldRejectNegatives;
+  }
 
   public int Calculate(string input)
   {
     List<string> addendStrings = _Split(input);
     List<int> potentialAddends = _Convert(addendStrings);
-    _AssertNoNegatives(potentialAddends);
+    if (_shouldRejectNegatives)
+    {
+      _AssertNoNegatives(potentialAddends);
+    }
     List<int> addends = _Transform(potentialAddends);
     int result = _Calculate(addends);
     return result;
@@ -40,7 +49,10 @@ public class Calculator
     // this duplicated code makes me sad but we will make it right later
     List<string> addendStrings = _Split(input);
     List<int> potentialAddends = _Convert(addendStrings);
-    _AssertNoNegatives(potentialAddends);
+    if (_shouldRejectNegatives)
+    {
+      _AssertNoNegatives(potentialAddends);
+    }
     List<int> addends = _Transform(potentialAddends);
     string formulaStart = string.Join("+", addends);
     int result = _Calculate(addends);
