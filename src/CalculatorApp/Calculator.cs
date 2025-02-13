@@ -22,6 +22,13 @@ public class Calculator
   private IStringToIntConverter _stringToIntConverter;
   private bool _shouldRejectNegatives;
 
+  // a String Calculator will
+  // - take a string as an input
+  // - split the string into a list of strings
+  // - convert the strings into integers
+  // - transform the integers given certain transformations
+  // - assert that no negative integers are present
+  // - sum the integers
   public Calculator()
   {
     _stringSplitter = StringSplitter.Default;
@@ -62,7 +69,7 @@ public class Calculator
   {
     // this duplicated code makes me sad but we will make it right later
     List<string> addendStrings = _stringSplitter.Split(input);
-    List<int> potentialAddends = _Convert(addendStrings);
+    List<int> potentialAddends = _stringToIntConverter.Convert(addendStrings);
     if (_shouldRejectNegatives)
     {
       _AssertNoNegatives(potentialAddends);
@@ -72,23 +79,6 @@ public class Calculator
     int result = _Calculate(addends);
     string resultString = string.Join(" = ", new string[] { formulaStart, result.ToString() });
     return resultString;
-  }
-  private List<int> _Convert(List<string> addendStrings)
-  {
-    List<int> addends = new List<int>();
-    foreach (string addendString in addendStrings)
-    {
-      try
-      {
-        int addend = int.Parse(addendString);
-        addends.Add(addend);
-      }
-      catch (FormatException)
-      {
-        addends.Add(0); // treat non-numeric strings as 0
-      }
-    }
-    return addends;
   }
 
   private void _AssertNoNegatives(List<int> addends)
