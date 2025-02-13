@@ -1,5 +1,4 @@
-using System;
-using System.Text.RegularExpressions;
+using CalculatorApp.StringSplitters;
 
 namespace CalculatorApp.Utils;
 
@@ -20,20 +19,28 @@ public class NegativeAddendException : Exception
 
 public class Calculator
 {
-  private const int DELIMITER_POSITION = 2;
-  private const int ADDEND_STRING_START = 5;
-  private const string SINGLE_CUSTOM_DELIMITER_REGEX = @"^//.\\n.*";
-  private const string MULTI_CUSTOM_DELIMITER_REGEX = @"^//(\[[^\]]*\])+\\n.*";
+  private StringSplitter _stringSplitter;
   private bool _shouldRejectNegatives;
 
-  public Calculator(bool shouldRejectNegatives = true)
+  public Calculator()
   {
-    _shouldRejectNegatives = shouldRejectNegatives;
+    _stringSplitter = StringSplitter.Default;
+    _shouldRejectNegatives = true;
+  }
+
+  public void SetStringSplitter(StringSplitter stringSplitter)
+  {
+    _stringSplitter = stringSplitter;
+  }
+
+  public void AllowNegatives()
+  {
+    _shouldRejectNegatives = false;
   }
 
   public int Calculate(string input)
   {
-    List<string> addendStrings = _Split(input);
+    List<string> addendStrings = _stringSplitter.Split(input);
     List<int> potentialAddends = _Convert(addendStrings);
     if (_shouldRejectNegatives)
     {
@@ -47,7 +54,7 @@ public class Calculator
   public string DisplayFormula(string input)
   {
     // this duplicated code makes me sad but we will make it right later
-    List<string> addendStrings = _Split(input);
+    List<string> addendStrings = _stringSplitter.Split(input);
     List<int> potentialAddends = _Convert(addendStrings);
     if (_shouldRejectNegatives)
     {
@@ -59,37 +66,6 @@ public class Calculator
     string resultString = string.Join(" = ", new string[] { formulaStart, result.ToString() });
     return resultString;
   }
-
-  private List<string> _Split(string input)
-  {
-    string originalAddendString;
-    List<string> delimiters = new List<string> { ",", "\\n" };
-
-    if (Regex.IsMatch(input, SINGLE_CUSTOM_DELIMITER_REGEX))
-    {
-      char customDelimiter = input[DELIMITER_POSITION];
-      delimiters.Add(customDelimiter.ToString());
-      originalAddendString = input.Substring(ADDEND_STRING_START);
-    }
-    else if (Regex.IsMatch(input, MULTI_CUSTOM_DELIMITER_REGEX))
-    {
-      MatchCollection matches = Regex.Matches(input, @"\[(.*?)\]");
-      foreach (Match match in matches)
-      {
-        delimiters.Add(match.Groups[1].Value);
-      }
-      originalAddendString = input.Substring(input.IndexOf("\\n") + 2);
-    }
-    else
-    {
-      originalAddendString = input;
-    }
-
-    string[] delimitersArray = delimiters.ToArray();
-
-    return originalAddendString.Split(delimitersArray, StringSplitOptions.None).ToList();
-  }
-
   private List<int> _Convert(List<string> addendStrings)
   {
     List<int> addends = new List<int>();

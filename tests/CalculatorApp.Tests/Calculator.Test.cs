@@ -1,3 +1,4 @@
+using CalculatorApp.StringSplitters;
 using CalculatorApp.Utils;
 
 namespace MyApp.Tests;
@@ -109,25 +110,10 @@ public class CalculatorApp_Utils_Calculator
     }
 
     [Fact]
-    public void Uses_Custom_Delimiter()
-    {
-        Calculator calculator = new();
-        int result = calculator.Calculate("//;\\n\\n\\n,,,;;;1;2,3\\n4\\n5,6");
-        Assert.Equal(21, result);
-    }
-
-    [Fact]
-    public void Uses_Multiple_Custom_Delimiters()
-    {
-        Calculator calculator = new();
-        int result = calculator.Calculate("//[;;;;][######]\\n2######5;;;;3");
-        Assert.Equal(10, result);
-    }
-
-    [Fact]
     public void Toggle_Negative_Denial_Off()
     {
-        Calculator calculator = new(false);
+        Calculator calculator = new();
+        calculator.AllowNegatives();
         int result = calculator.Calculate("1,-2,3");
         Assert.Equal(2, result);
     }

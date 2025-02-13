@@ -1,28 +1,29 @@
 ﻿using CalculatorApp.Utils;
+using CalculatorApp.StringSplitters;
 
 namespace CalculatorApp;
 
 public class CalculatorArgs
 {
-  private bool _shouldRejectNegatives;
+  private bool _shouldAllowNegatives;
   public CalculatorArgs(string[] args)
   {
-    _shouldRejectNegatives = true; // default value
+    _shouldAllowNegatives = false;
 
     foreach (string arg in args)
     {
       if (arg == "-n")
       {
-        _shouldRejectNegatives = false;
+        _shouldAllowNegatives = true;
       }
     }
   }
 
-  public bool RejectNegatives
+  public bool ShouldAllowNegatives
   {
     get
     {
-      return _shouldRejectNegatives;
+      return _shouldAllowNegatives;
     }
   }
 }
@@ -34,7 +35,18 @@ public class Program
   {
     CalculatorArgs calculatorArgs = new(args);
 
-    Calculator calculator = new(calculatorArgs.RejectNegatives);
+    Calculator calculator = new();
+
+    StringSplitter stringSplitter = new();
+    stringSplitter.AddSplitStrategy(new CustomSingleCharSplitStrategy());
+    stringSplitter.AddSplitStrategy(new CustomMultiStringSplitStrategy());
+    stringSplitter.AddSplitStrategy(new DefaultSplitStrategy());
+    calculator.SetStringSplitter(stringSplitter);
+
+    if (calculatorArgs.ShouldAllowNegatives)
+    {
+      calculator.AllowNegatives();
+    }
 
     Describe();
 

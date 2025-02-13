@@ -1,4 +1,5 @@
 using CalculatorApp.Utils;
+using CalculatorApp.StringSplitters;
 
 namespace MyApp.Tests;
 
@@ -64,6 +65,11 @@ public class ChallengeExampleTests
   public void Req_6_Custom_Delimiter_Pound()
   {
     Calculator calculator = new();
+
+    StringSplitter stringSplitter = new();
+    stringSplitter.AddSplitStrategy(new CustomSingleCharSplitStrategy());
+    calculator.SetStringSplitter(stringSplitter);
+
     int result = calculator.Calculate("//#\\n2#5");
     Assert.Equal(7, result);
   }
@@ -72,6 +78,11 @@ public class ChallengeExampleTests
   public void Req_6_Comma()
   {
     Calculator calculator = new();
+
+    StringSplitter stringSplitter = new();
+    stringSplitter.AddSplitStrategy(new CustomSingleCharSplitStrategy());
+    calculator.SetStringSplitter(stringSplitter);
+
     int result = calculator.Calculate("//,\\n2,ff,100");
     Assert.Equal(102, result);
   }
@@ -80,6 +91,11 @@ public class ChallengeExampleTests
   public void Req_7_Triple_Asterisk()
   {
     Calculator calculator = new();
+
+    StringSplitter stringSplitter = new();
+    stringSplitter.AddSplitStrategy(new CustomMultiStringSplitStrategy());
+    calculator.SetStringSplitter(stringSplitter);
+
     int result = calculator.Calculate("//[***]\\n11***22***33");
     Assert.Equal(66, result);
   }
@@ -88,6 +104,11 @@ public class ChallengeExampleTests
   public void Req_8_Multiple_Custom_Delimiters()
   {
     Calculator calculator = new();
+
+    StringSplitter stringSplitter = new();
+    stringSplitter.AddSplitStrategy(new CustomMultiStringSplitStrategy());
+    calculator.SetStringSplitter(stringSplitter);
+
     int result = calculator.Calculate("//[*][!!][r9r]\\n11r9r22*hh*33!!44");
     Assert.Equal(110, result);
   }
