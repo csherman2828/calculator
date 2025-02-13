@@ -1,5 +1,6 @@
 ﻿using CalculatorApp.StringSplitters;
 using CalculatorApp.OperandTransformers;
+using CalculatorApp.Converters;
 using CalculatorApp.Builder;
 using CalculatorApp.Rules;
 
@@ -12,28 +13,27 @@ public class Program
   {
     CalculatorArgs calculatorArgs = new(args);
 
-    CalculatorBuilder calculatorBuilder = new();
-
     StringSplitter stringSplitter = new();
     stringSplitter.AddSplitStrategy(new CustomSingleCharSplitStrategy());
     stringSplitter.AddSplitStrategy(new CustomMultiStringSplitStrategy());
     stringSplitter.AddSplitStrategy(new DefaultSplitStrategy());
-    calculatorBuilder.SetStringSplitter(stringSplitter);
 
     OperandRules operandRules = new();
-
     if (!calculatorArgs.ShouldAllowNegatives)
     {
       operandRules.AddRule(new NoNegativesRule());
     }
 
-    calculatorBuilder.SetOperandRules(operandRules);
-
     OperandTransformer operandTransformer = new();
     operandTransformer.AddTransformation(new UpperBoundTransformation(1000));
-    calculatorBuilder.SetOperandTransformer(operandTransformer);
 
-    Calculator calculator = calculatorBuilder.Build();
+    CalculatorBuilder calculatorBuilder = new();
+    Calculator calculator = calculatorBuilder
+      .SetStringSplitter(stringSplitter)
+      .SetStringToIntConverter(new StringToIntConverter())
+      .SetOperandRules(operandRules)
+      .SetOperandTransformer(operandTransformer)
+      .Build();
 
     Describe();
 
