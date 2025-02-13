@@ -8,7 +8,6 @@ namespace CalculatorApp;
 
 public class Program
 {
-  private const string PROMPT = "add> ";
   public static void Main(string[] args)
   {
     CalculatorArgs calculatorArgs = new(args);
@@ -36,29 +35,33 @@ public class Program
       .SetOperandTransformer(operandTransformer)
       .Build();
 
-    Describe();
+    Describe(calculatorArgs.Operation);
 
     while (true)
     {
-      string input = Prompt();
+      string input = Prompt(calculatorArgs.Operation);
       string formula = calculator.DisplayFormula(input);
       Console.WriteLine(formula);
     }
   }
 
-  private static void Describe()
+  private static void Describe(string operation)
   {
+    string prompt = $"{operation.ToLower()}> ";
+
     Console.WriteLine("CalculatorApp");
-    Console.WriteLine("Type in 1 or 2 numbers separated by a comma to calculate their sum\n");
+    Console.WriteLine($"Type in 1 or 2 numbers separated by a comma to {prompt}\n");
     Console.WriteLine("Examples:");
-    Console.WriteLine($"{PROMPT}1");
-    Console.WriteLine($"{PROMPT}1,2\n");
+    Console.WriteLine($"{prompt}1");
+    Console.WriteLine($"{prompt}> 1,2\n");
     Console.WriteLine("------------------------\n");
   }
 
-  private static string Prompt()
+  private static string Prompt(string operation)
   {
-    Console.Write(PROMPT);
+    string prompt = $"{operation.ToLower()}> ";
+
+    Console.Write(prompt);
     return Console.ReadLine() ?? string.Empty;
   }
 }
