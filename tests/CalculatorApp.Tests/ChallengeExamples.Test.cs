@@ -116,7 +116,6 @@ public class ChallengeExampleTests
   [Fact]
   public void Stretch_1_Formula()
   {
-
     string result = _calculator.DisplayFormula("2,,4,rrrr,1001,6");
     Assert.Equal("2+0+4+0+0+6 = 12", result);
   }

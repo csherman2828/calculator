@@ -49,7 +49,7 @@ public class Calculator
     List<int> potentialAddends = _stringToIntConverter.Convert(addendStrings);
     _operandRules.Enforce(potentialAddends);
     List<int> addends = _operandTransformer.Transform(potentialAddends);
-    string formulaStart = string.Join("+", addends);
+    string formulaStart = _operation.Formulate(addends);
     int answer = _Calculate(addends);
     string formula = string.Join(" = ", new string[] { formulaStart, answer.ToString() });
     return new CalculatorResult(answer, formula);
@@ -59,7 +59,7 @@ public class Calculator
   {
     if (operands.Count == 0)
     {
-      return _operation.Identity;
+      return 0;
     }
 
     int firstOperand = operands[0];

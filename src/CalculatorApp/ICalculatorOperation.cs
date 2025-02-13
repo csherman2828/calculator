@@ -2,6 +2,6 @@ namespace CalculatorApp;
 
 public interface ICalculatorOperation
 {
-  public int Identity { get; }
+  public string Formulate(List<int> operands);
   public int Operate(int a, int b);
 }

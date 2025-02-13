@@ -322,4 +322,112 @@ public class CalculatorApp_Utils_Calculator
         int result = calculator.Calculate("6,2");
         Assert.Equal(3, result);
     }
+
+    [Fact]
+    public void Shows_Correct_Formula_For_Subtraction()
+    {
+        StringSplitter stringSplitter = new();
+        stringSplitter.AddSplitStrategy(new CustomSingleCharSplitStrategy());
+        stringSplitter.AddSplitStrategy(new CustomMultiStringSplitStrategy());
+        stringSplitter.AddSplitStrategy(new DefaultSplitStrategy());
+
+        OperandRules operandRules = new();
+        operandRules.AddRule(new NoNegativesRule());
+
+        OperandTransformer operandTransformer = new();
+        operandTransformer.AddTransformation(new UpperBoundTransformation(1000));
+
+        CalculatorBuilder calculatorBuilder = new();
+        Calculator calculator = calculatorBuilder
+          .SetOperation("SUBTRACT")
+          .SetStringSplitter(stringSplitter)
+          .SetStringToIntConverter(new StringToIntConverter())
+          .SetOperandRules(operandRules)
+          .SetOperandTransformer(operandTransformer)
+          .Build();
+
+        string result = calculator.DisplayFormula("7,2,3");
+        Assert.Equal("7-2-3 = 2", result);
+    }
+
+    [Fact]
+    public void Shows_Correct_Formula_For_Addition()
+    {
+        StringSplitter stringSplitter = new();
+        stringSplitter.AddSplitStrategy(new CustomSingleCharSplitStrategy());
+        stringSplitter.AddSplitStrategy(new CustomMultiStringSplitStrategy());
+        stringSplitter.AddSplitStrategy(new DefaultSplitStrategy());
+
+        OperandRules operandRules = new();
+        operandRules.AddRule(new NoNegativesRule());
+
+        OperandTransformer operandTransformer = new();
+        operandTransformer.AddTransformation(new UpperBoundTransformation(1000));
+
+        CalculatorBuilder calculatorBuilder = new();
+        Calculator calculator = calculatorBuilder
+          .SetOperation("ADD")
+          .SetStringSplitter(stringSplitter)
+          .SetStringToIntConverter(new StringToIntConverter())
+          .SetOperandRules(operandRules)
+          .SetOperandTransformer(operandTransformer)
+          .Build();
+
+        string result = calculator.DisplayFormula("1,2,3");
+        Assert.Equal("1+2+3 = 6", result);
+    }
+
+    [Fact]
+    public void Shows_Correct_Formula_For_Multiplication()
+    {
+        StringSplitter stringSplitter = new();
+        stringSplitter.AddSplitStrategy(new CustomSingleCharSplitStrategy());
+        stringSplitter.AddSplitStrategy(new CustomMultiStringSplitStrategy());
+        stringSplitter.AddSplitStrategy(new DefaultSplitStrategy());
+
+        OperandRules operandRules = new();
+        operandRules.AddRule(new NoNegativesRule());
+
+        OperandTransformer operandTransformer = new();
+        operandTransformer.AddTransformation(new UpperBoundTransformation(1000));
+
+        CalculatorBuilder calculatorBuilder = new();
+        Calculator calculator = calculatorBuilder
+          .SetOperation("MULTIPLY")
+          .SetStringSplitter(stringSplitter)
+          .SetStringToIntConverter(new StringToIntConverter())
+          .SetOperandRules(operandRules)
+          .SetOperandTransformer(operandTransformer)
+          .Build();
+
+        string result = calculator.DisplayFormula("2,3,4");
+        Assert.Equal("2*3*4 = 24", result);
+    }
+
+    [Fact]
+    public void Shows_Correct_Formula_For_Division()
+    {
+        StringSplitter stringSplitter = new();
+        stringSplitter.AddSplitStrategy(new CustomSingleCharSplitStrategy());
+        stringSplitter.AddSplitStrategy(new CustomMultiStringSplitStrategy());
+        stringSplitter.AddSplitStrategy(new DefaultSplitStrategy());
+
+        OperandRules operandRules = new();
+        operandRules.AddRule(new NoNegativesRule());
+
+        OperandTransformer operandTransformer = new();
+        operandTransformer.AddTransformation(new UpperBoundTransformation(1000));
+
+        CalculatorBuilder calculatorBuilder = new();
+        Calculator calculator = calculatorBuilder
+          .SetOperation("DIVIDE")
+          .SetStringSplitter(stringSplitter)
+          .SetStringToIntConverter(new StringToIntConverter())
+          .SetOperandRules(operandRules)
+          .SetOperandTransformer(operandTransformer)
+          .Build();
+
+        string result = calculator.DisplayFormula("8,2,2");
+        Assert.Equal("8/2/2 = 2", result);
+    }
 }
