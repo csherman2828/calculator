@@ -162,4 +162,30 @@ public class CalculatorApp_Utils_Calculator
         int result = calculator.Calculate("1,-2,3");
         Assert.Equal(2, result);
     }
+
+    [Fact]
+    public void Handle_Custom_Alternative_Delimiter()
+    {
+        int upperBound = 100;
+
+        CalculatorBuilder calculatorBuilder = new();
+
+        StringSplitter stringSplitter = new();
+        stringSplitter.AddSplitStrategy(new CustomSingleCharSplitStrategy());
+        stringSplitter.AddSplitStrategy(new CustomMultiStringSplitStrategy());
+        stringSplitter.AddSplitStrategy(new DefaultSplitStrategy());
+        calculatorBuilder.SetStringSplitter(stringSplitter);
+
+        OperandTransformer operandTransformer = new();
+        operandTransformer.AddTransformation(new UpperBoundTransformation(upperBound));
+        calculatorBuilder.SetOperandTransformer(operandTransformer);
+
+        OperandRules operandRules = new();
+        calculatorBuilder.SetOperandRules(operandRules);
+
+        Calculator calculator = calculatorBuilder.Build();
+
+        int result = calculator.Calculate("1,102,-1");
+        Assert.Equal(0, result);
+    }
 }

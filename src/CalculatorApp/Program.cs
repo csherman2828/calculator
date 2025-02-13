@@ -25,7 +25,7 @@ public class Program
     }
 
     OperandTransformer operandTransformer = new();
-    operandTransformer.AddTransformation(new UpperBoundTransformation(1000));
+    operandTransformer.AddTransformation(new UpperBoundTransformation(calculatorArgs.UpperBound));
 
     CalculatorBuilder calculatorBuilder = new();
     Calculator calculator = calculatorBuilder
